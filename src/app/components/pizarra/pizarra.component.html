@@ -1,0 +1,9 @@
+<div class="pizarra-container">
+  <h2 class="titulo">Apunte semanal</h2>
+    <div class="fecha">{{ currentDate | date:'dd/MM/yyyy' }}</div>
+    <textarea 
+      [(ngModel)]="contenido" 
+      placeholder="Escribe aquí..."
+      class="pizarra-input">
+    </textarea>
+  </div>

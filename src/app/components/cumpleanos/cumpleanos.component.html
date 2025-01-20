@@ -1,0 +1,8 @@
+<div class="cumpleanos-container">
+    <h2 class="titulo">Cumpleaños</h2>
+    <div class="tarjeta" *ngFor="let cumpleanero of cumpleaneros">
+      <img [src]="cumpleanero.foto" [alt]="cumpleanero.nombre" class="foto">
+      <h3 class="nombre">{{ cumpleanero.nombre }}</h3>
+      <h4 class="fecha">{{ cumpleanero.fecha }}</h4>
+    </div>
+  </div>

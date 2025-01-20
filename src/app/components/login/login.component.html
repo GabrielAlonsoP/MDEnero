@@ -1,0 +1,30 @@
+<div class="login-container">
+    <div class="login-card">
+      <h2>Acceso Administrativo</h2>
+      <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <div class="form-group">
+          <label for="username">Usuario</label>
+          <input 
+            type="text" 
+            id="username"
+            name="username"
+            [(ngModel)]="credentials.username"
+            required>
+        </div>
+  
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input 
+            type="password" 
+            id="password"
+            name="password"
+            [(ngModel)]="credentials.password"
+            required>
+        </div>
+  
+        <button type="submit" [disabled]="!loginForm.form.valid">
+          Ingresar
+        </button>
+      </form>
+    </div>
+  </div>

@@ -1,0 +1,43 @@
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+}
+
+.content-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.split-container {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.panel {
+  flex: 1;
+  min-width: 0; /* Previene que los paneles se desborden */
+}
+
+/* Responsive para pantallas pequeñas */
+@media (max-width: 768px) {
+  .split-container {
+    flex-direction: column;
+  }
+  
+  .panel {
+    width: 100%;
+  }
+
+  main {
+    padding: 10px;
+  }
+}
