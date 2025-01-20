@@ -8,10 +8,13 @@ import { LoginComponent } from '../login/login.component';
   standalone: true,
   imports: [CommonModule, FormsModule, LoginComponent],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.css'
+  styleUrl:'./header.component.css',
+  host: {
+    'id': 'banner'  // ID único estático
+  }
 })
 export class HeaderComponent {
-  title1: string = 'Mural Digital';
+  title: string = 'Mural Digital';
   title2: string = 'Brigada de Inteligencia';
   showLoginModal: boolean = false;
 

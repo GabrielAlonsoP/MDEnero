@@ -12,14 +12,18 @@ interface PersonalDestacado {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './p-destacado.component.html',
-  styleUrl: './p-destacado.component.css'
+  styleUrl: './p-destacado.component.css',
+  host: {
+    'id': 'personalD'  // ID único estático
+  }
+  
 })
 export class PDestacadoComponent {
   personalDestacado: PersonalDestacado[] = [
     {
       foto: 'assets/images/empleado1.jpg',
-      nombre: 'Juan Pérez',
-      grado: 'Sargento'
+      nombre: 'Vicente Bravo Hidalgo',
+      grado: 'Sargento mayor'
     },
     {
       foto: 'assets/images/empleado2.jpg',

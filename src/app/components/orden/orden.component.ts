@@ -7,7 +7,11 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './orden.component.html',
-  styleUrl: './orden.component.css'
+  styleUrl: './orden.component.css',
+  host: {
+    'id': 'orden-semanal'  // ID único estático
+  }
+  
 })
 export class OrdenComponent {
   pdfUrl: SafeResourceUrl | null = null;

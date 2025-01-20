@@ -12,7 +12,11 @@ interface Cumpleanero {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './cumpleanos.component.html',
-  styleUrl: './cumpleanos.component.css'
+  styleUrl: './cumpleanos.component.css',
+  host: {
+    'id': 'birthday'  // ID único estático
+  }
+  
 })
 export class CumpleanosComponent {
   cumpleaneros: Cumpleanero[] = [

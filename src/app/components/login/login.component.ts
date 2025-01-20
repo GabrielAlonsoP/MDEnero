@@ -13,7 +13,11 @@ interface LoginCredentials {
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  host: {
+    'id': 'credenciales'  // ID único estático
+  }
+  
 })
 export class LoginComponent {
   credentials: LoginCredentials = {
@@ -29,6 +33,6 @@ export class LoginComponent {
     
     // Por ahora solo simularemos el login
     localStorage.setItem('isAdmin', 'true');
-    this.router.navigate(['/']);
+    this.router.navigate(['/cumpleanos']);
   }
 }
