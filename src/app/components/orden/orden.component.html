@@ -1,23 +1,18 @@
 <div class="orden-container">
-  <h2 class="titulo">Orden semanal</h2>
-  <div class="file-input-container">
-    <label for="pdf-upload" class="file-label">
-      Seleccionar PDF
-      <input 
-        id="pdf-upload"
-        type="file" 
-        accept="application/pdf" 
-        (change)="onFileSelected($event)"
-        class="file-input">
-    </label>
-  </div>
+  <h2 class="titulo">ORDEN SEMANAL</h2>
+  <!-- Solo mostrar input de archivo si es admin -->
+  <input *ngIf="isAdmin$ | async"
+         type="file" 
+         accept="application/pdf" 
+         (change)="onFileSelected($event)"
+         class="file-input">
   
+  <!-- Visor de PDF -->
   <div class="pdf-viewer" *ngIf="pdfUrl">
-    <iframe 
-      [src]="pdfUrl" 
-      frameborder="0" 
-      width="100%"
-      height="350px">
+    <iframe [src]="pdfUrl" 
+            width="100%" 
+            height="600px"
+            class="pdf-frame">
     </iframe>
   </div>
 </div>

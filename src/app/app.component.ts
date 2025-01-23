@@ -5,7 +5,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { PizarraComponent } from './components/pizarra/pizarra.component';
 import { OrdenComponent } from './components/orden/orden.component'; 
 import { PDestacadoComponent } from './components/p-destacado/p-destacado.component';
-// import { CumpleanosComponent } from './components/cumpleanos/cumpleanos.component';
+import { CumpleanosComponent } from './components/cumpleanos/cumpleanos.component';
 // import { LoginComponent } from './components/login/login.component';
 
 @Component({
@@ -19,7 +19,7 @@ import { PDestacadoComponent } from './components/p-destacado/p-destacado.compon
     PizarraComponent,
     OrdenComponent,
     PDestacadoComponent,
-    // CumpleanosComponent,
+    CumpleanosComponent,
     // LoginComponent
   ],
   templateUrl: './app.component.html',

@@ -1,38 +1,29 @@
-import { Component } from '@angular/core';
+// login.component.ts
+import { Component, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-
-interface LoginCredentials {
-  username: string;
-  password: string;
-}
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
-  host: {
-    'id': 'credenciales'  // ID único estático
-  }
-  
+  styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  credentials: LoginCredentials = {
-    username: '',
-    password: ''
-  };
+  @Output() loginSuccess = new EventEmitter<void>();
+  username: string = '';
+  password: string = '';
+  errorMessage: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private authService: AuthService) {}
 
   onSubmit() {
-    // Aquí irá la lógica de autenticación cuando conectemos con el backend
-    console.log('Credenciales:', this.credentials);
-    
-    // Por ahora solo simularemos el login
-    localStorage.setItem('isAdmin', 'true');
-    this.router.navigate(['/cumpleanos']);
+    if (this.authService.login(this.username, this.password)) {
+      this.loginSuccess.emit();
+    } else {
+      this.errorMessage = 'Credenciales inválidas';
+    }
   }
 }

@@ -11,5 +11,5 @@ export const routes: Routes = [
   { path: 'orden', component: OrdenComponent },
   { path: 'destacado', component: PDestacadoComponent },
   { path: 'cumpleanos', component: CumpleanosComponent },
-  { path: '', redirectTo: '/cumpleanos', pathMatch: 'full' }
+  { path: '', redirectTo: '/', pathMatch: 'full' }
 ];

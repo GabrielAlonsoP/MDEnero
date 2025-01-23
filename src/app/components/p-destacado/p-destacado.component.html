@@ -1,8 +1,45 @@
+<!-- p-destacado.component.html -->
 <div class="destacados-container">
-    <h2 class="titulo">Personal Destacado</h2>
-    <div class="tarjeta" *ngFor="let personal of personalDestacado">
-      <img [src]="personal.foto" [alt]="personal.nombre" class="foto">
-      <h3 class="nombre">{{ personal.nombre }}</h3>
-      <h4 class="grado">{{ personal.grado }}</h4>
+  <h2 class="titulo">PERSONAL DESTACADO</h2>
+  <div *ngFor="let personal of personalDestacado" class="tarjeta">
+    <img [src]="personal.foto" [alt]="personal.nombre" class="foto">
+    <h3 class="nombre">{{personal.nombre}}</h3>
+    <p class="grado">{{personal.grado}}</p>
+    
+    <div *ngIf="isAdmin$ | async" class="admin-controls">
+      <button (click)="editarPersonal(personal)">Editar</button>
+      <button (click)="eliminarPersonal(personal)" class="btn-eliminar">Eliminar</button>
     </div>
   </div>
+
+  <button *ngIf="isAdmin$ | async" 
+          (click)="agregarPersonal()"
+          class="btn-agregar">
+    Agregar Personal
+  </button>
+
+  <!-- Modal de edición -->
+  <div *ngIf="modalVisible" class="modal-overlay">
+    <div class="modal">
+      <h3>{{personalEnEdicion?.id ? 'Editar' : 'Agregar'}} Personal</h3>
+      <form (ngSubmit)="guardarCambios()">
+        <div class="form-group">
+          <label>Nombre:</label>
+          <input [(ngModel)]="personalEnEdicion!.nombre" name="nombre" required>
+        </div>
+        <div class="form-group">
+          <label>Grado:</label>
+          <input [(ngModel)]="personalEnEdicion!.grado" name="grado" required>
+        </div>
+        <div class="form-group">
+          <label>Foto:</label>
+          <input type="file" (change)="onFotoSelected($event)" accept="image/*">
+        </div>
+        <div class="modal-buttons">
+          <button type="submit">Guardar</button>
+          <button type="button" (click)="cerrarModal()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

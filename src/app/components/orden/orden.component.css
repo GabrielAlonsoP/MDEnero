@@ -25,12 +25,17 @@
 }
 
 .file-input {
-  display: none;
+  margin-bottom: 5px;
+  padding: 5px;
+  border: 2px dashed #ddd;
+  border-radius: 4px;
+  width: 100%;
+  
 }
 
 .pdf-viewer {
   width: 100%;
-  height: 370px;
+  height: 380px;
   border: 1px solid #ddd;
   border-radius: 4px;
   overflow: hidden;

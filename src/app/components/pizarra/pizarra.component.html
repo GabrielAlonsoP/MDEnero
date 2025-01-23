@@ -1,9 +1,13 @@
-<div class="pizarra-container">
-  <h2 class="titulo">Apunte semanal</h2>
+   <div class="pizarra-container">
+    <h2 class="titulo">Apunte semanal</h2>
+    <!-- Muestra la fecha actual -->
     <div class="fecha">{{ currentDate | date:'dd/MM/yyyy' }}</div>
+    
+    <!-- Área de texto que solo es editable para administradores -->
     <textarea 
       [(ngModel)]="contenido" 
       placeholder="Escribe aquí..."
-      class="pizarra-input">
+      class="pizarra-input"
+      [readonly]="!(isAdmin$ | async)">
     </textarea>
   </div>

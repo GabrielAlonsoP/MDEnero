@@ -1,25 +1,28 @@
+<!-- header.component.html -->
 <header class="header-container">
-    <div class="logo-container">
-      <img src="assets/images/logoBinte2.png" alt="Logo BINTE" class="logo">
-    </div>
-    
-    <div class="title-container">
-      <h2>{{ title }}</h2>
-      <h2>{{ title2 }}</h2>
-    </div>
-
-    <div class="auth-container">
-      <button class="login-btn" (click)="toggleLogin()">
-        <i class="fas fa-user"></i> Admin
-      </button>
-    </div>
+  <div class="logo-container">
+    <img src="assets/images/logoBinte2.png" alt="Logo BINTE" class="logo">
+  </div>
   
-    <!-- Modal de Login -->
-    <div class="modal" *ngIf="showLoginModal">
-      <div class="modal-overlay" (click)="toggleLogin()"></div>
-      <div class="modal-content">
-        <button class="close-btn" (click)="toggleLogin()">×</button>
-        <app-login></app-login>
-      </div>
+  <div class="title-container">
+    <h2>{{ title }}</h2>
+    <h2>{{ title2 }}</h2>
+  </div>
+
+  <div class="auth-container">
+    <button class="login-btn" *ngIf="!(isAdmin$ | async)" (click)="toggleLogin()">
+      <i class="fas fa-user"></i> Admin
+    </button>
+    <button class="login-btn" *ngIf="isAdmin$ | async" (click)="logout()">
+      <i class="fas fa-user"></i> Cerrar Sesión
+    </button>
+  </div>
+
+  <div class="modal" *ngIf="showLoginModal">
+    <div class="modal-overlay" (click)="toggleLogin()"></div>
+    <div class="modal-content">
+      <button class="close-btn" (click)="toggleLogin()">×</button>
+      <app-login (loginSuccess)="onLoginSuccess()"></app-login>
     </div>
-  </header>
+  </div>
+</header>
