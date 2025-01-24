@@ -14,7 +14,7 @@ import { CumpleanosComponent } from './components/cumpleanos/cumpleanos.componen
   imports: [
     CommonModule,
     RouterModule,
-    RouterOutlet,
+    // RouterOutlet,
     HeaderComponent,
     PizarraComponent,
     OrdenComponent,
