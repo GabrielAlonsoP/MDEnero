@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from '../login/login.component';
 import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';  // Agregar este import
 
 @Component({
   selector: 'app-header',
@@ -19,8 +20,15 @@ export class HeaderComponent {
   showLoginModal: boolean = false;
   isAdmin$: Observable<boolean>;
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {
+    console.log('Iniciando HeaderComponent');
     this.isAdmin$ = this.authService.isAdmin();
+    this.isAdmin$.subscribe(isAdmin => {
+      console.log('Estado de admin:', isAdmin);
+    });
   }
 
   toggleLogin() {
@@ -29,9 +37,12 @@ export class HeaderComponent {
 
   onLoginSuccess() {
     this.showLoginModal = false;
+    this.isAdmin$ = this.authService.isAdmin(); // Actualizar estado admin
+    window.location.reload(); // Forzar recarga para actualizar permisos
   }
 
   logout() {
     this.authService.logout();
+    this.router.navigate(['/login']); // Redirigir después del logout
   }
 }

@@ -1,72 +1,76 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, BehaviorSubject, of } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
+import { PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-  private isAdminSubject = new BehaviorSubject<boolean>(false);
-  
-  private readonly ADMIN_CREDENTIALS = {
-    username: 'admin',
-    password: 'admin123'
-  };
+  private apiUrl = `${environment.apiUrl}/api/usuarios`;
+  private platformId = inject(PLATFORM_ID);
+  private userRoleSubject = new BehaviorSubject<string | null>(null);
 
-  constructor(private router: Router) {
-    // Solo verificar sesión si estamos en el navegador
-    if (typeof window !== 'undefined') {
-      this.checkStoredSession();
+  constructor(private http: HttpClient) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.userRoleSubject.next(this.getStoredRole());
     }
   }
 
-  login(username: string, password: string): boolean {
-    if (username === this.ADMIN_CREDENTIALS.username && 
-        password === this.ADMIN_CREDENTIALS.password) {
-      
-      this.isAuthenticatedSubject.next(true);
-      this.isAdminSubject.next(true);
-      
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('isAuthenticated', 'true');
-        localStorage.setItem('isAdmin', 'true');
-      }
-      
-      return true;
+  private getStoredRole(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('userRole');
     }
-    return false;
+    return null;
   }
 
+  getToken(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem('token');
+    }
+    return null;
+  }
+
+// src/app/services/auth.service.ts
+isAuthenticated(): boolean {
+  if (isPlatformBrowser(this.platformId)) {
+    const token = localStorage.getItem('token');
+    console.log('Token en localStorage:', token); // Para debug
+    return !!token;
+  }
+  return false;
+}
+
+  login(usuario: string, password: string): Observable<boolean> {
+    console.log('Intentando login con:', usuario);
+    return this.http.post<{token: string, rol: string}>(`${this.apiUrl}/login`, { usuario, password })
+      .pipe(
+        tap(response => {
+          console.log('Respuesta del servidor:', response);
+          if (isPlatformBrowser(this.platformId)) {
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('userRole', response.rol);
+            this.userRoleSubject.next(response.rol);
+            console.log('Role almacenado:', response.rol);
+          }
+        }),
+        map(() => true)
+      );
+  }
   logout(): void {
-    this.isAuthenticatedSubject.next(false);
-    this.isAdminSubject.next(false);
-    
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('isAuthenticated');
-      localStorage.removeItem('isAdmin');
+    if (isPlatformBrowser(this.platformId)) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userRole');
+      this.userRoleSubject.next(null);
     }
-    
-    this.router.navigate(['/login']);
-  }
-
-  private checkStoredSession(): void {
-    if (typeof window !== 'undefined') {
-      const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-      const isAdmin = localStorage.getItem('isAdmin') === 'true';
-      
-      if (isAuthenticated) {
-        this.isAuthenticatedSubject.next(true);
-        this.isAdminSubject.next(isAdmin);
-      }
-    }
-  }
-
-  isAuthenticated(): Observable<boolean> {
-    return this.isAuthenticatedSubject.asObservable();
   }
 
   isAdmin(): Observable<boolean> {
-    return this.isAdminSubject.asObservable();
+    return this.userRoleSubject.pipe(
+      map(role => role === 'admin')
+    );
   }
 }
