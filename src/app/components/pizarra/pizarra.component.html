@@ -8,6 +8,8 @@
       [(ngModel)]="contenido" 
       placeholder="Escribe aquí..."
       class="pizarra-input"
-      [readonly]="!(isAdmin$ | async)">
+      [readonly]="!(isAdmin$ | async)"
+      [class.no-pointer]="!(isAdmin$ | async)"
+      (blur)="onBlur()">
     </textarea>
   </div>

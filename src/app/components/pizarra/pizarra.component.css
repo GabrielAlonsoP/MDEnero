@@ -23,3 +23,10 @@
     font-size: 16px;
     line-height: 1.5;
   }
+
+  .no-pointer {
+    pointer-events: none;  /* Esto evita cualquier interacción con el mouse */
+    cursor: default;       /* Cambia el cursor al predeterminado */
+    border: none;          /* Opcional: remueve el borde */
+    resize: none;          /* Evita que se pueda redimensionar */
+  }

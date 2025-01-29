@@ -6,24 +6,25 @@ const Usuario = require('../models/Usuario');
 const auth = require('../middleware/auth');
 
 router.post('/registro', async (req, res) => {
- try {
-  console.log('Datos recibidos', req.body);
-   const { nombre, usuario, password } = req.body;
-   const salt = await bcrypt.genSalt(10);
-   const hashedPassword = await bcrypt.hash(password, salt);
-   
-   const nuevoUsuario = new Usuario({
-     nombre,
-     usuario,
-     password: hashedPassword
-   });
+  try {
+    console.log('Datos recibidos', req.body);
+    const { nombre, usuario, password, rol } = req.body; // Agregamos rol
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    
+    const nuevoUsuario = new Usuario({
+      nombre,
+      usuario,
+      password: hashedPassword,
+      rol: rol || 'usuario' // Si no se especifica, será 'usuario'
+    });
 
-   await nuevoUsuario.save();
-   res.status(201).json({ mensaje: 'Usuario creado exitosamente' });
- } catch (error) {
-  console.error('Error detallado', error);
-   res.status(500).json({ error: 'Error al crear usuario' });
- }
+    await nuevoUsuario.save();
+    res.status(201).json({ mensaje: 'Usuario creado exitosamente' });
+  } catch (error) {
+    console.error('Error detallado', error);
+    res.status(500).json({ error: 'Error al crear usuario' });
+  }
 });
 
 // Modificar la respuesta del login

@@ -3,13 +3,14 @@ const router = express.Router();
 const Pizarra = require('../models/Pizarra');
 const auth = require('../middleware/auth');
 
-router.get('/', auth, async (req, res) => {
- try {
-   const pizarra = await Pizarra.findOne().sort({ fechaActualizacion: -1 });
-   res.json(pizarra);
- } catch (error) {
-   res.status(500).json({ error: 'Error al obtener pizarra' });
- }
+// Modificar la ruta GET para que no requiera autenticación
+router.get('/', async (req, res) => {
+  try {
+    const pizarra = await Pizarra.findOne().sort({ fechaActualizacion: -1 });
+    res.json(pizarra);
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener pizarra' });
+  }
 });
 
 router.post('/', auth, async (req, res) => {

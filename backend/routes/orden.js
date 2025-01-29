@@ -6,16 +6,15 @@ const auth = require('../middleware/auth');
 const upload = require('../config/upload');
 
 // Obtener todas las órdenes
-router.get('/', auth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
-    const ordenes = await Orden.find().sort({ fechaPublicacion: -1 });
-    res.json(ordenes);
+    const orden = await Orden.find().sort({ fechaPublicacion: -1 }).limit(1);
+    res.json(orden);
   } catch (error) {
-    res.status(500).json({ error: 'Error al obtener órdenes' });
+    res.status(500).json({ error: 'Error al obtener órden' });
   }
 });
 
-// Subir nueva orden
 router.post('/', [auth, upload.single('archivo')], async (req, res) => {
   try {
     const { titulo } = req.body;
@@ -26,7 +25,7 @@ router.post('/', [auth, upload.single('archivo')], async (req, res) => {
 
     const orden = new Orden({
       titulo,
-      archivo: req.file.path,
+      archivo: 'uploads/' + req.file.filename, // Agregar 'uploads/' al inicio
       fechaPublicacion: Date.now()
     });
 

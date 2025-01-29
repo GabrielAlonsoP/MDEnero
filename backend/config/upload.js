@@ -1,24 +1,17 @@
-// config/upload.js
+// backend/config/upload.js
 const multer = require('multer');
+const path = require('path');
 
 const storage = multer.diskStorage({
-  destination: 'uploads/',
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Asegúrate que esta carpeta exista
+  },
   filename: (req, file, cb) => {
-    const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`;
-    cb(null, `${uniqueSuffix}-${file.originalname}`);
+    // Usar timestamp para evitar nombres duplicados
+    cb(null, Date.now() + '-' + file.originalname);
   }
 });
 
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype === 'application/pdf') {
-    cb(null, true);
-  } else {
-    cb(new Error('Solo se permiten archivos PDF'), false);
-  }
-};
+const upload = multer({ storage: storage });
 
-module.exports = multer({ 
-  storage,
-  fileFilter,
-  limits: { fileSize: 5 * 1024 * 1024 } // 5MB
-});
+module.exports = upload;
