@@ -5,6 +5,7 @@ import { PizarraComponent } from './components/pizarra/pizarra.component';
 import { OrdenComponent } from './components/orden/orden.component';
 import { PDestacadoComponent } from './components/p-destacado/p-destacado.component';
 import { CumpleanosComponent } from './components/cumpleanos/cumpleanos.component';
+import { ParteFuerzaComponent } from './components/parte-fuerza/parte-fuerza.component';
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -16,6 +17,7 @@ export const routes: Routes = [
       { path: 'orden', component: OrdenComponent },
       { path: 'destacado', component: PDestacadoComponent },
       { path: 'cumpleanos', component: CumpleanosComponent },
+      { path: 'parte-fuerza', component: ParteFuerzaComponent },
       { path: '', redirectTo: 'pizarra', pathMatch: 'full' }
     ],
     canActivate: [authGuard]

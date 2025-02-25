@@ -7,6 +7,7 @@ import { PizarraComponent } from './components/pizarra/pizarra.component';
 import { OrdenComponent } from './components/orden/orden.component'; 
 import { PDestacadoComponent } from './components/p-destacado/p-destacado.component';
 import { CumpleanosComponent } from './components/cumpleanos/cumpleanos.component';
+import { ParteFuerzaComponent } from './components/parte-fuerza/parte-fuerza.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthService } from './services/auth.service';
 import { Router } from '@angular/router';
@@ -23,6 +24,7 @@ import { Router } from '@angular/router';
     OrdenComponent,
     PDestacadoComponent,
     CumpleanosComponent,
+    ParteFuerzaComponent,
     // LoginComponent
   ],
   templateUrl: './app.component.html',

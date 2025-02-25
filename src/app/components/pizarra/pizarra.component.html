@@ -1,15 +1,42 @@
-   <div class="pizarra-container">
-    <h2 class="titulo">Apunte semanal</h2>
-    <!-- Muestra la fecha actual -->
+<!-- src/app/components/pizarra/pizarra.component.html -->
+<div class="pizarra-container">
+  <div class="header-container">
+    <h2 class="titulo">APUNTE SEMANAL</h2>
     <div class="fecha">{{ currentDate | date:'dd/MM/yyyy' }}</div>
-    
-    <!-- Área de texto que solo es editable para administradores -->
-    <textarea 
-      [(ngModel)]="contenido" 
-      placeholder="Escribe aquí..."
-      class="pizarra-input"
-      [readonly]="!(isAdmin$ | async)"
-      [class.no-pointer]="!(isAdmin$ | async)"
-      (blur)="onBlur()">
-    </textarea>
   </div>
+
+  <div class="pizarra-header">
+    <button 
+      *ngIf="(isAdmin$ | async) && puedeAgregarCuadro()"
+      (click)="agregarCuadro()"
+      class="btn-agregar">
+      + Agregar
+    </button>
+    <span 
+      *ngIf="(isAdmin$ | async) && !puedeAgregarCuadro()"
+      class="limite-mensaje">
+      Límite máximo de cuadros alcanzado
+    </span>
+  </div>
+  
+  <div class="cuadros-container">
+    <div *ngFor="let cuadro of contenidos; let i = index" class="cuadro-texto">
+      <div class="cuadro-wrapper">
+        <textarea 
+          [(ngModel)]="cuadro.texto"
+          placeholder="Escribe aquí..."
+          class="pizarra-input"
+          [class.no-pointer]="!(isAdmin$ | async)"
+          [readonly]="!(isAdmin$ | async)"
+          (blur)="guardarCambios()">
+        </textarea>
+        <button 
+          *ngIf="isAdmin$ | async"
+          (click)="eliminarCuadro(i)" 
+          class="btn-eliminar">
+          ×
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

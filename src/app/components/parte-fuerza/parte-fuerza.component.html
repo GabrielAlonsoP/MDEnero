@@ -1,0 +1,39 @@
+<!-- parte-fuerza.component.html -->
+<div class="parte-fuerza-container">
+  <div class="header-container">
+    <h2 class="titulo">PARTE DE FUERZA</h2>
+    <div class="fecha">{{ currentDate | date:'dd/MM/yyyy' }}</div>
+  </div>
+
+  <div class="pf-header">
+    <div class="file-input-container">
+      <label class="custom-file-input">
+        + 
+        <input type="file" 
+               accept="application/pdf" 
+               (change)="onFileSelected($event)"
+               class="hidden-input">
+      </label>
+    </div>
+  </div>
+  
+  <div class="documentos-container">
+    <div *ngFor="let documento of documentos" class="documento-wrapper">
+      <div class="documento-header">
+        <span class="documento-titulo">{{ documento.titulo }}</span>
+        <button 
+          (click)="eliminarDocumento(documento._id)" 
+          class="btn-eliminar">
+          ×
+        </button>
+      </div>
+      <div class="pdf-viewer">
+        <iframe [src]="getSafeUrl(documento.archivo)" 
+                width="100%" 
+                height="300px"
+                class="pdf-frame">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</div>

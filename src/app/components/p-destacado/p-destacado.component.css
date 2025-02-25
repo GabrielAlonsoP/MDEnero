@@ -1,6 +1,6 @@
 .destacados-container {
     display: flex;
-    gap: 20px;
+    gap: 50px;
     justify-content: center;
     flex-wrap: wrap;
     padding: 20px;
@@ -16,7 +16,6 @@
     width: 280px;
     text-align: center;
     transition: all 0.3s ease;
-
   }
 
   .tarjeta:hover {

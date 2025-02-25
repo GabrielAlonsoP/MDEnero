@@ -1,11 +1,17 @@
+<!-- orden.component.html -->
 <div class="orden-container">
-  <h2 class="titulo">ORDEN SEMANAL</h2>
-  <!-- Solo mostrar input de archivo si es admin -->
-  <input *ngIf="isAdmin$ | async"
-         type="file" 
-         accept="application/pdf" 
-         (change)="onFileSelected($event)"
-         class="file-input">
+  <div class="orden-header">
+    <h2 class="titulo">ORDEN SEMANAL</h2>
+    <div class="file-input-container" *ngIf="isAdmin$ | async">
+      <label class="custom-file-input">
+        Elegir archivo
+        <input type="file" 
+               accept="application/pdf" 
+               (change)="onFileSelected($event)"
+               class="hidden-input">
+      </label>
+    </div>
+  </div>
   
   <!-- Visor de PDF -->
   <div class="pdf-viewer" *ngIf="pdfUrl">

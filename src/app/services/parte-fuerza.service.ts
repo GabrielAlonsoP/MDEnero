@@ -1,4 +1,4 @@
-// src/app/services/pizarra.service.ts
+// src/app/services/parte-fuerza.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
@@ -7,8 +7,8 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class PizarraService {
-  private apiUrl = `${environment.apiUrl}/api/pizarra`;
+export class ParteFuerzaService {
+  private apiUrl = `${environment.apiUrl}/api/parte-fuerza`;
 
   constructor(
     private http: HttpClient,
@@ -24,18 +24,16 @@ export class PizarraService {
     };
   }
 
-  getContenido() {
+  getDocumentos() {
+    // No necesita headers de autenticación para GET
     return this.http.get<any>(this.apiUrl);
   }
+  subirDocumento(formData: FormData) {
+  // Ya no necesita headers de autenticación
+    return this.http.post(this.apiUrl, formData);
+}
 
-// pizarra.service.ts
-  guardarContenido(contenidos: any[]) {
-    const datos = {
-      contenidos: contenidos.map(c => ({
-        texto: c.texto,
-        orden: c.orden
-      }))
-    };
-    return this.http.post(this.apiUrl, datos, this.getHeaders());
+  eliminarDocumento(id: string) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

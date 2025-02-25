@@ -10,6 +10,7 @@ const usuariosRoutes = require('../routes/usuarios');
 const personalRoutes = require('../routes/personal');
 const ordenRoutes = require('../routes/orden');
 const pizarraRoutes = require('../routes/pizarra');
+const parteFuerzaRoutes = require('../routes/ParteFuerza');
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/personal', personalRoutes);
 app.use('/api/orden', ordenRoutes);
 app.use('/api/pizarra', pizarraRoutes);
+app.use('/api/parte-fuerza', parteFuerzaRoutes);
 
 // Error handler
 app.use((err, req, res, next) => {
